@@ -4,11 +4,13 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchModal from "./SearchModal";
+import { Menu, X } from "lucide-react";
 
 export default function Navbar() {
   const [pagesOpen, setPagesOpen] = useState(false);
   const [recipeOpen, setRecipeOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const recipeRef = useRef<HTMLDivElement>(null);
   const pagesRef = useRef<HTMLDivElement>(null);
@@ -36,14 +38,20 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="flex items-center justify-between px-6 py-4 bg-white">
+      <header className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white">
         {/* Logo */}
         <div className="flex items-center">
-          <Image src="/images/logo.png" alt="logo" width={50} height={50} />
+          <Image
+            src="/images/logo.png"
+            alt="logo"
+            width={40}
+            height={40}
+            className="sm:w-[50px] sm:h-[50px]"
+          />
         </div>
 
-        {/* Navigation */}
-        <nav className="flex items-center space-x-8">
+        {/* Desktop Navigation */}
+        <nav className="hidden lg:flex items-center space-x-8">
           <Link href="/" className="text-red-500 hover:text-red-600">
             Home Page
           </Link>
@@ -74,27 +82,23 @@ export default function Navbar() {
                   ? "scale-100 opacity-100 pointer-events-auto"
                   : "scale-95 opacity-0 pointer-events-none"
               }`}
-              style={{ minWidth: "10rem" }}
             >
-              <div className="py-1" role="menu" aria-orientation="vertical">
+              <div className="py-1">
                 <Link
                   href="/recipe/123"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   All Recipes
                 </Link>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Desserts
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Main Dishes
                 </a>
@@ -128,55 +132,47 @@ export default function Navbar() {
                   ? "scale-100 opacity-100 pointer-events-auto"
                   : "scale-95 opacity-0 pointer-events-none"
               }`}
-              style={{ minWidth: "10rem" }}
             >
-              <div className="py-1" role="menu" aria-orientation="vertical">
+              <div className="py-1">
                 <Link
                   href="/login"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Login
                 </Link>
                 <Link
                   href="/register"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Register
                 </Link>
                 <Link
                   href="/favorites"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Favorites
                 </Link>
                 <Link
                   href="/profile"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Profile
                 </Link>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   About
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Blog Page
                 </a>
                 <a
                   href="#"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  role="menuitem"
                 >
                   Search Results
                 </a>
@@ -205,7 +201,11 @@ export default function Navbar() {
               />
             </svg>
           </button>
-          <Link href="/profile" className="text-gray-700 hover:text-black">
+
+          <Link
+            href="/profile"
+            className="hidden sm:block text-gray-700 hover:text-black"
+          >
             <svg
               className="h-5 w-5"
               fill="none"
@@ -220,7 +220,63 @@ export default function Navbar() {
               />
             </svg>
           </Link>
+
+          {/* Mobile menu button */}
+          <button
+            className="lg:hidden text-gray-700 hover:text-gray-900"
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+          >
+            {mobileMenuOpen ? (
+              <X className="h-6 w-6" />
+            ) : (
+              <Menu className="h-6 w-6" />
+            )}
+          </button>
         </div>
+
+        {/* Mobile Menu */}
+        {mobileMenuOpen && (
+          <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t lg:hidden z-50">
+            <div className="px-4 py-2 space-y-2">
+              <Link
+                href="/"
+                className="block py-2 text-red-500 hover:text-red-600"
+              >
+                Home Page
+              </Link>
+              <Link
+                href="/recipe/123"
+                className="block py-2 text-gray-700 hover:text-gray-900"
+              >
+                Recipe Page
+              </Link>
+              <Link
+                href="/login"
+                className="block py-2 text-gray-700 hover:text-gray-900"
+              >
+                Login
+              </Link>
+              <Link
+                href="/register"
+                className="block py-2 text-gray-700 hover:text-gray-900"
+              >
+                Register
+              </Link>
+              <Link
+                href="/favorites"
+                className="block py-2 text-gray-700 hover:text-gray-900"
+              >
+                Favorites
+              </Link>
+              <Link
+                href="/profile"
+                className="block py-2 text-gray-700 hover:text-gray-900"
+              >
+                Profile
+              </Link>
+            </div>
+          </div>
+        )}
       </header>
       <SearchModal isOpen={searchOpen} onClose={() => setSearchOpen(false)} />
     </>

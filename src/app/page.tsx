@@ -1,25 +1,15 @@
 import HeadSection from "@/components/HeadSection";
+import PopularCategories from "@/components/PopularCategories";
 import SuperDelicious from "@/components/SuperDelicious";
 import SweetTooth from "@/components/SweetTooth";
-import PopularCategories from "@/components/PopularCategories";
-import EmailSendSection from "@/components/EmailSendSection";
-import CollectionSections from "@/components/CollectionSections";
-import LastRecipes from "@/components/LastRecipes";
 
-export default function HomePage() {
+export default function Home() {
   return (
-    <main>
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <HeadSection />
-        <SuperDelicious />
-        <SweetTooth />
-        <PopularCategories />
-      </div>
-      <EmailSendSection />
-      <div className="max-w-6xl mx-auto px-4 py-8">
-        <CollectionSections />
-        <LastRecipes />
-      </div>
+    <main className="max-w-6xl mx-auto px-4 sm:px-6 py-4 sm:py-6">
+      <HeadSection />
+      <PopularCategories />
+      <SuperDelicious />
+      <SweetTooth />
     </main>
   );
 }
