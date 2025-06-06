@@ -1,47 +1,62 @@
 "use client";
 
-import Image from "next/image";
-import React, { useState } from "react";
-import items from "@/data/recipes.json";
+import { useState } from "react";
+import FoodCard from "./FoodCard";
+import { Recipe } from "@/types/recipe";
 
-const LastRecipes = () => {
-  const [lastRecipes, setLastRecipes] = useState(items.slice(0, 4));
+interface LastRecipesProps {
+  recipes: Recipe[];
+}
+
+export default function LastRecipes({ recipes }: LastRecipesProps) {
   const [showMore, setShowMore] = useState(false);
 
-  const handleLoadMore = (isShowMore: boolean) => {
-    setShowMore(isShowMore);
-    setLastRecipes(items.slice(0, isShowMore ? items.length : 4));
+  // Hiển thị 4 món đầu tiên, hoặc tất cả nếu showMore = true
+  const displayCount = showMore ? recipes.length : 4;
+  const displayRecipes = recipes.slice(0, displayCount);
+
+  const handleLoadMore = () => {
+    setShowMore(!showMore);
   };
+
+  if (recipes.length === 0) {
+    return (
+      <section className="mt-12">
+        <h2 className="text-2xl font-bold mb-6">Latest Recipes</h2>
+        <div className="text-center py-8">
+          <p className="text-gray-500">Chưa có công thức nào được tải lên.</p>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mt-12">
       <h2 className="text-2xl font-bold mb-6">Latest Recipes</h2>
-      <div className="w-full grid grid-cols-4 space-y-8 space-x-5">
-        {lastRecipes.map((item) => (
-          <div key={item.id} className="flex flex-col gap-1">
-            <div className="relative h-[150px] w-full rounded-lg overflow-hidden">
-              <Image
-                src={item.src}
-                alt={item.title}
-                fill
-                objectFit="cover"
-                className="hover:scale-110 transition-all duration-700"
-              />
-            </div>
-            <p className="text-left font-medium">{item.title}</p>
-          </div>
+      <div className="w-full grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+        {displayRecipes.map((recipe) => (
+          <FoodCard
+            key={recipe.id}
+            id={recipe.id}
+            title={recipe.title}
+            image={recipe.image}
+            prepTime={recipe.prepTime}
+            servings={recipe.servings}
+            category={recipe.category}
+          />
         ))}
       </div>
-      <div className="flex justify-center">
-        <button
-          className="border border-black text-black px-10 py-2 rounded-md hover:bg-gray-200"
-          onClick={() => handleLoadMore(!showMore)}
-        >
-          {showMore ? "Show Less" : "Load More"}
-        </button>
-      </div>
+
+      {recipes.length > 4 && (
+        <div className="flex justify-center mt-8">
+          <button
+            className="border border-black text-black px-10 py-2 rounded-md hover:bg-gray-200 transition-colors"
+            onClick={handleLoadMore}
+          >
+            {showMore ? "Show Less" : "Load More"}
+          </button>
+        </div>
+      )}
     </section>
   );
-};
-
-export default LastRecipes;
+}

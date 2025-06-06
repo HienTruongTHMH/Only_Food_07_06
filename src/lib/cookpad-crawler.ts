@@ -45,7 +45,8 @@ export class CookpadCrawler {
         'img[alt*="recipe"]',
         'img[src*="recipe"]',
         '.main-photo img',
-        '.hero-image img'
+        '.hero-image img',
+        'div.tofu-image img',
       ];
       
       for (const selector of imageSources) {
