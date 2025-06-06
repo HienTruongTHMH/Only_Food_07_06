@@ -1,37 +1,24 @@
 import Image from "next/image";
+import { getCategories } from "@/data/recipes";
 
-export default function PopularCategories() {
-  const items = [
-    {
-      src: "/images/categories/pasta 1.png",
-      title: "Pasta",
-    },
-    {
-      src: "/images/categories/pizza 1.png",
-      title: "Pizza",
-    },
-    { src: "/images/categories/vegan food 1.png", title: "Vegan" },
-    { src: "/images/categories/dessert 1.png", title: "Desserts" },
-    { src: "/images/categories/smoothie 1.png", title: "Smoothies" },
-    { src: "/images/categories/breakfast 1.png", title: "Breakfast" },
-  ];
+export default async function PopularCategories() {
+  const categories = await getCategories();
 
   return (
-    <section className="mt-12">
-      <h2 className="text-2xl font-bold mb-6">Popular Categories</h2>
-      <div className="w-full grid grid-cols-6 gap-8">
-        {items.map((item) => (
-          <div key={item.title} className="flex flex-col items-center gap-2">
+    <section className="mt-8 sm:mt-12">
+      <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Danh mục phổ biến</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 sm:gap-6 lg:gap-8">
+        {categories.map((category) => (
+          <div key={category.id} className="flex flex-col items-center gap-2 cursor-pointer hover:scale-105 transition-transform">
             <div className="relative aspect-square w-full rounded-full overflow-hidden">
               <Image
-                src={item.src}
-                alt={item.title}
+                src={category.image}
+                alt={category.name}
                 fill
-                objectFit="cover"
-                className="hover:scale-110 transition-all duration-700"
+                className="object-cover hover:scale-110 transition-all duration-700"
               />
             </div>
-            <p className="text-center">{item.title}</p>
+            <p className="text-center text-sm sm:text-base">{category.name}</p>
           </div>
         ))}
       </div>

@@ -1,6 +1,7 @@
-import { useState, useEffect, useRef } from "react";
-import data from "@/data/recipes.json";
-import Image from "next/image";
+"use client";
+
+import { useState, useEffect } from "react";
+import { X, Search } from "lucide-react";
 
 interface SearchModalProps {
   isOpen: boolean;
@@ -8,96 +9,68 @@ interface SearchModalProps {
 }
 
 export default function SearchModal({ isOpen, onClose }: SearchModalProps) {
-  const [query, setQuery] = useState("");
-  const [results, setResults] = useState(data);
-  const [showAll, setShowAll] = useState(false);
-
-  const inputRef = useRef<HTMLInputElement>(null);
-
-  useEffect(() => {
-    if (isOpen) {
-      setTimeout(() => inputRef.current?.focus(), 100);
-    }
-  }, [isOpen]);
-
-  useEffect(() => {
-    if (query.trim() === "") {
-      setResults(data);
-    } else {
-      setResults(
-        data.filter((item) =>
-          item.title.toLowerCase().includes(query.toLowerCase())
-        )
-      );
-    }
-    setShowAll(false); // Reset showAll khi search mới
-  }, [query]);
+  const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
     if (isOpen) {
       document.body.style.overflow = "hidden";
     } else {
-      document.body.style.overflow = "";
+      document.body.style.overflow = "unset";
     }
-    // Cleanup khi unmount hoặc khi đóng modal
+
     return () => {
-      document.body.style.overflow = "";
+      document.body.style.overflow = "unset";
     };
   }, [isOpen]);
 
   if (!isOpen) return null;
 
-  // Chỉ lấy 5 kết quả đầu nếu chưa bấm showAll
-  const displayedResults = showAll ? results : results.slice(0, 5);
-
   return (
-    <div className="fixed inset-0 z-50 bg-black/10 flex flex-col items-center justify-start pt-6">
-      <div className="bg-white w-full max-w-4xl rounded-b-2xl shadow-lg p-6 relative">
-        {/* Close button */}
-        <button
-          className="absolute top-4 right-6 text-2xl text-gray-600 hover:text-black"
-          onClick={onClose}
-        >
-          &times;
-        </button>
-        {/* Search input */}
-        <input
-          ref={inputRef}
-          type="text"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          placeholder="Search for food..."
-          className="w-full border-b border-gray-400 text-lg px-2 py-2 outline-none"
-        />
-        {/* Results */}
-        <div className="mt-6 max-h-[300px] overflow-y-auto">
-          {displayedResults.map((item) => (
-            <div
-              key={item.id}
-              className="flex items-center gap-4 py-2 border-b last:border-b-0"
-            >
-              <Image
-                src={item.src}
-                alt={item.title}
-                width={100}
-                height={100}
-                className="rounded"
-              />
-              <span className="text-gray-800">{item.title}</span>
-            </div>
-          ))}
-        </div>
-        {/* See all results */}
-        {results.length > 5 && (
-          <div className="flex justify-center mt-8">
+    <div className="fixed inset-0 z-50 overflow-y-auto">
+      <div className="flex min-h-full items-center justify-center p-4">
+        <div className="fixed inset-0 bg-black bg-opacity-25" onClick={onClose} />
+
+        <div className="relative bg-white rounded-lg w-full max-w-md sm:max-w-lg lg:max-w-2xl p-4 sm:p-6">
+          <div className="flex items-center justify-between mb-4">
+            <h2 className="text-lg sm:text-xl font-semibold">Search Recipes</h2>
             <button
-              className="border px-6 py-2 rounded hover:bg-gray-100"
-              onClick={() => setShowAll((prev) => !prev)}
+              onClick={onClose}
+              className="text-gray-400 hover:text-gray-600"
             >
-              {showAll ? "Show less" : `See all ${results.length} results`}
+              <X className="w-5 h-5 sm:w-6 sm:h-6" />
             </button>
           </div>
-        )}
+
+          <div className="relative mb-6">
+            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
+            <input
+              type="text"
+              placeholder="Search for recipes..."
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+              className="w-full pl-10 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-500 focus:border-transparent text-sm sm:text-base"
+              autoFocus
+            />
+          </div>
+
+          {/* Search Results */}
+          <div className="space-y-3">
+            <h3 className="text-sm font-medium text-gray-500 uppercase tracking-wide">
+              Popular Searches
+            </h3>
+            <div className="flex flex-wrap gap-2">
+              {["Pasta", "Pizza", "Cheesecake", "Chicken", "Salad"].map((term) => (
+                <button
+                  key={term}
+                  onClick={() => setSearchTerm(term)}
+                  className="px-3 py-1 bg-gray-100 hover:bg-gray-200 rounded-full text-sm transition-colors"
+                >
+                  {term}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );

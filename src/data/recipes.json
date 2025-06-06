@@ -1,63 +1,193 @@
-[
+{
+  "categories": [
     {
-      "id": 1,
+      "id": "mon-chinh",
+      "name": "Món chính",
+      "image": "/images/categories/pasta 1.png"
+    },
+    {
+      "id": "mon-an-vat",
+      "name": "Món ăn vặt",
+      "image": "/images/categories/pizza 1.png"
+    },
+    {
+      "id": "trang-mieng",
+      "name": "Tráng miệng",
+      "image": "/images/categories/dessert 1.png"
+    },
+    {
+      "id": "do-uong",
+      "name": "Đồ uống",
+      "image": "/images/categories/smoothie 1.png"
+    },
+    {
+      "id": "com-rang",
+      "name": "Cơm rang",
+      "image": "/images/categories/breakfast 1.png"
+    },
+    {
+      "id": "canh-soup",
+      "name": "Canh & Soup",
+      "image": "/images/categories/vegan food 1.png"
+    }
+  ],
+  "recipes": [
+    {
+      "id": "uc-ga-ap-chao",
+      "title": "Ức gà áp chảo low carb",
       "src": "/images/spinach and cheese pasta.png",
-      "title": "Spinach and Cheese Pasta"
+      "prepTime": 20,
+      "servings": 2,
+      "category": "mon-chinh",
+      "ingredients": [
+        "300g ức gà",
+        "2 muống canh dầu olive",
+        "1 muống cà phê muối",
+        "1/2 muống cà phê tiêu đen",
+        "1 muống cà phê bột tỏi",
+        "1 muống cà phê oregano khô",
+        "Rau xà lách để trang trí",
+        "Cà chua cherry để trang trí"
+      ],
+      "instructions": [
+        "Rửa sạch ức gà, thấm khô bằng khăn giấy",
+        "Ướp ức gà với muối, tiêu, bột tỏi và oregano trong 15 phút",
+        "Đun nóng chảo với dầu olive ở lửa vừa",
+        "Cho ức gà vào áp chảo mỗi mặt 6-8 phút cho đến khi chín vàng",
+        "Để ức gà nghỉ 5 phút rồi thái lát",
+        "Bày ra đĩa cùng rau xà lách và cà chua cherry"
+      ]
     },
     {
-      "id": 2,
+      "id": "banh-mi-op-la",
+      "title": "Bánh mì ốp la",
       "src": "/images/donut 1.png",
-      "title": "Fancy Glazed Donuts"
+      "prepTime": 10,
+      "servings": 1,
+      "category": "mon-an-vat",
+      "ingredients": [
+        "2 lát bánh mì sandwich",
+        "1 quả trứng gà",
+        "1 muống canh bơ",
+        "Muối, tiêu theo khẩu vị",
+        "Rau thơm để trang trí"
+      ],
+      "instructions": [
+        "Đun nóng chảo với bơ",
+        "Đập trứng vào chảo, rắc chút muối tiêu",
+        "Chiên trứng ốp la vừa chín",
+        "Nướng bánh mì đến khi vàng giòn",
+        "Đặt trứng ốp la lên bánh mì",
+        "Trang trí với rau thơm và thưởng thức"
+      ]
     },
     {
-      "id": 3,
-      "src": "/images/cheese burger.png",
-      "title": "Cheese Burger"
-    },
-    {
-      "id": 4,
-      "src": "/images/spinach and cheese pasta.png",
-      "title": "Spinach and Cheese Pasta"
-    },
-    {
-      "id": 5,
-      "src": "/images/donut 1.png",
-      "title": "Fancy Glazed Donuts"
-    },
-    {
-      "id": 6,
-      "src": "/images/cheese burger.png",
-      "title": "Cheese Burger"
-    },
-    
-    {
-      "id": 7,
+      "id": "che-ba-mau",
+      "title": "Chè ba màu",
       "src": "/images/strawberry milkshake.png",
-      "title": "Strawberry Milkshake"
+      "prepTime": 45,
+      "servings": 4,
+      "category": "trang-mieng",
+      "ingredients": [
+        "100g đậu xanh",
+        "100g đậu đỏ",
+        "50g bột rau câu",
+        "400ml nước cốt dừa",
+        "150g đường",
+        "Đá bào",
+        "Chút muối"
+      ],
+      "instructions": [
+        "Nấu đậu xanh và đậu đỏ riêng biệt đến mềm",
+        "Pha rau câu theo hướng dẫn trên bao bì",
+        "Đun nước cốt dừa với đường và muối",
+        "Cho đậu xanh vào đáy ly",
+        "Tiếp theo là lớp rau câu",
+        "Cuối cùng là đậu đỏ và nước cốt dừa",
+        "Thêm đá bào và thưởng thức"
+      ]
     },
     {
-      "id": 8,
-      "src": "/images/chocolate banana cake.png",
-      "title": "Chocolate Banana Cake"
-    },
-    {
-      "id": 9,
-      "src": "/images/berry biscuit 1.png",
-      "title": "Berry Biscuit"
-    },
-    {
-      "id": 10,
-      "src": "/images/spinach and cheese pasta.png",
-      "title": "Spinach and Cheese Pasta"
-    },
-    {
-      "id": 11,
-      "src": "/images/donut 1.png",
-      "title": "Fancy Glazed Donuts"
-    },
-    {
-      "id": 12,
+      "id": "pho-bo",
+      "title": "Phở bò",
       "src": "/images/cheese burger.png",
-      "title": "Cheese Burger"
+      "prepTime": 180,
+      "servings": 4,
+      "category": "mon-chinh",
+      "ingredients": [
+        "500g xương bò",
+        "300g thịt bò",
+        "400g bánh phở",
+        "2 củ hành tây",
+        "1 khúc gừng 5cm",
+        "2 que quế",
+        "3 hạt hồi",
+        "1 muống cà phê hạt nêm",
+        "Hành lá, ngò gai",
+        "Giá đỗ, chanh, ớt"
+      ],
+      "instructions": [
+        "Luộc xương bò sơ qua để loại tạp chất",
+        "Nướng hành tây và gừng trên bếp gas",
+        "Cho xương vào nồi với 3 lít nước, đun sôi",
+        "Thêm hành, gừng nướng và gia vị",
+        "Niêu nhỏ lửa 2-3 tiếng",
+        "Trần bánh phở, thái thịt bò mỏng",
+        "Múc nước dùng vào tô, thêm bánh phở và thịt",
+        "Ăn kèm rau thơm, giá đỗ, chanh và ớt"
+      ]
+    },
+    {
+      "id": "chocolate-banana-cake",
+      "title": "Bánh socola chuối",
+      "src": "/images/chocolate banana cake.png",
+      "prepTime": 60,
+      "servings": 8,
+      "category": "trang-mieng",
+      "ingredients": [
+        "2 quả chuối chín",
+        "200g bột mì",
+        "100g bột cacao",
+        "150g đường",
+        "100ml dầu ăn",
+        "2 quả trứng",
+        "1 tsp baking powder",
+        "200ml sữa tươi"
+      ],
+      "instructions": [
+        "Làm nóng lò nướng 180°C",
+        "Nghiền chuối thành paste mịn",
+        "Trộn bột mì, cacao, đường, baking powder",
+        "Đánh trứng với dầu và sữa",
+        "Trộn hỗn hợp ướt với hỗn hợp khô",
+        "Thêm chuối nghiền vào",
+        "Đổ vào khuôn và nướng 45 phút"
+      ]
+    },
+    {
+      "id": "berry-biscuit",
+      "title": "Bánh quy berry",
+      "src": "/images/berry biscuit 1.png",
+      "prepTime": 30,
+      "servings": 12,
+      "category": "trang-mieng",
+      "ingredients": [
+        "250g bột mì",
+        "100g bơ lạnh",
+        "80g đường",
+        "1 quả trứng",
+        "100g berry tươi",
+        "1 tsp vanilla",
+        "1/2 tsp muối"
+      ],
+      "instructions": [
+        "Trộn bột mì với muối",
+        "Thêm bơ lạnh và nhào đến khi tạo thành crumb",
+        "Đánh trứng với đường và vanilla",
+        "Trộn hỗn hợp ướt với bột",
+        "Thêm berry và nhào nhẹ",
+        "Vo thành viên và nướng 180°C trong 15 phút"
+      ]
     }
   ]
+}
