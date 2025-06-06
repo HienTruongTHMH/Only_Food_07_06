@@ -1,7 +1,9 @@
 import Image from "next/image";
-import { categories } from "@/data/recipes";
+import { getCategories } from "@/data/recipes";
 
-export default function PopularCategories() {
+export default async function PopularCategories() {
+  const categories = await getCategories();
+
   return (
     <section className="mt-8 sm:mt-12">
       <h2 className="text-xl sm:text-2xl font-bold mb-4 sm:mb-6">Danh mục phổ biến</h2>

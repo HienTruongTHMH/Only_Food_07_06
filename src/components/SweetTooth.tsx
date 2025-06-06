@@ -1,8 +1,8 @@
 import FoodCard from "./FoodCard";
 import { getDessertRecipes } from "@/data/recipes";
 
-export default function SweetTooth() {
-  const dessertRecipes = getDessertRecipes();
+export default async function SweetTooth() {
+  const dessertRecipes = await getDessertRecipes();
 
   return (
     <section className="mt-8 sm:mt-12">

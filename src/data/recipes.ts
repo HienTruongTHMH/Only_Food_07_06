@@ -1,29 +1,52 @@
 import { Recipe, Category } from '@/types/recipe';
-import recipeData from './recipes.json';
+import { prisma } from '@/lib/prisma';
 
-export const categories: Category[] = recipeData.categories;
-export const recipes: Recipe[] = recipeData.recipes.map(recipe => ({
-  ...recipe,
-  image: recipe.src // Chuyển đổi từ 'src' sang 'image'
-}));
+// Get all categories
+export async function getCategories(): Promise<Category[]> {
+  const categories = await prisma.category.findMany();
+  return categories;
+}
 
-// Helper functions để lấy data
-export const getRecipesByCategory = (categoryId: string): Recipe[] => {
-  return recipes.filter(recipe => recipe.category === categoryId);
-};
+// Get all recipes
+export async function getRecipes(): Promise<Recipe[]> {
+  const recipes = await prisma.recipe.findMany({
+    orderBy: { createdAt: 'desc' }
+  });
+  return recipes;
+}
 
-export const getRecipeById = (id: string): Recipe | undefined => {
-  return recipes.find(recipe => recipe.id === id);
-};
+// Get recipe by slug/id
+export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
+  const recipe = await prisma.recipe.findUnique({
+    where: { id: slug }
+  });
+  return recipe;
+}
 
-export const getRecipeBySlug = (slug: string): Recipe | undefined => {
-  return recipes.find(recipe => recipe.id === slug);
-};
+// Get recipes by category
+export async function getRecipesByCategory(categoryId: string): Promise<Recipe[]> {
+  const recipes = await prisma.recipe.findMany({
+    where: { category: categoryId },
+    orderBy: { createdAt: 'desc' }
+  });
+  return recipes;
+}
 
-export const getFeaturedRecipes = (): Recipe[] => {
-  return recipes.slice(0, 3);
-};
+// Get featured recipes (first 3)
+export async function getFeaturedRecipes(): Promise<Recipe[]> {
+  const recipes = await prisma.recipe.findMany({
+    take: 3,
+    orderBy: { createdAt: 'desc' }
+  });
+  return recipes;
+}
 
-export const getDessertRecipes = (): Recipe[] => {
-  return recipes.filter(recipe => recipe.category === 'trang-mieng').slice(0, 3);
-};
+// Get dessert recipes
+export async function getDessertRecipes(): Promise<Recipe[]> {
+  const recipes = await prisma.recipe.findMany({
+    where: { category: 'trang-mieng' },
+    take: 3,
+    orderBy: { createdAt: 'desc' }
+  });
+  return recipes;
+}

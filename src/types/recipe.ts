@@ -1,13 +1,14 @@
 export interface Recipe {
   id: string;
   title: string;
-  image: string; // Đây là sau khi convert từ 'src'
-  src?: string;   // Optional, để tương thích với JSON
+  image: string;
   prepTime: number;
   servings: number;
+  category: string;
   ingredients: string[];
   instructions: string[];
-  category: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface Category {

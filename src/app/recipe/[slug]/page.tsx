@@ -10,13 +10,14 @@ import { Clock, Users, ArrowLeft } from "lucide-react";
 import Link from "next/link";
 
 interface RecipePageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function RecipePage({ params }: RecipePageProps) {
-  const recipe = getRecipeBySlug(params.slug);
+export default async function RecipePage({ params }: RecipePageProps) {
+  const { slug } = await params;
+  const recipe = await getRecipeBySlug(slug); // Add await!
 
   if (!recipe) {
     notFound();
@@ -77,18 +78,14 @@ export default function RecipePage({ params }: RecipePageProps) {
 
         {/* Hướng dẫn */}
         <div className="bg-white rounded-lg border border-gray-200 p-6 shadow-sm">
-          <h2 className="text-xl font-bold mb-4 text-gray-800">
-            Hướng dẫn cách làm
-          </h2>
+          <h2 className="text-xl font-bold mb-4 text-gray-800">Hướng dẫn cách làm</h2>
           <ol className="space-y-4">
             {recipe.instructions?.map((instruction, index) => (
               <li key={index} className="flex gap-4">
                 <div className="w-8 h-8 rounded-full bg-orange-500 text-white flex items-center justify-center font-semibold flex-shrink-0 text-sm">
                   {index + 1}
                 </div>
-                <p className="text-gray-700 pt-1 leading-relaxed">
-                  {instruction}
-                </p>
+                <p className="text-gray-700 pt-1 leading-relaxed">{instruction}</p>
               </li>
             ))}
           </ol>
