@@ -71,11 +71,6 @@ export default function Hero() {
           Look no further for a creamy and ultra smooth classic cheesecake
           recipe! No one can deny its simple decadence.
         </p>
-        <div className="mt-6 lg:mt-8 self-end">
-          <button className="p-3 bg-orange-500 hover:bg-orange-600 text-white rounded-full shadow-md hover:shadow-lg transition-all duration-300 ease-in-out transform hover:scale-105">
-            <MoveRight className="w-5 h-5 lg:w-6 lg:h-6" />
-          </button>
-        </div>
       </div>
     </div>
   );
