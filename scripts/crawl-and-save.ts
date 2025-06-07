@@ -15,12 +15,12 @@ const cookpadUrls = [
 
 async function seedCategories() {
   const categories = [
-    { id: 'mon-chinh', name: 'Món chính', image: '/images/categories/pasta 1.png' },
-    { id: 'mon-an-vat', name: 'Món ăn vặt', image: '/images/categories/pizza 1.png' },
-    { id: 'trang-mieng', name: 'Tráng miệng', image: '/images/categories/dessert 1.png' },
-    { id: 'do-uong', name: 'Đồ uống', image: '/images/categories/smoothie 1.png' },
-    { id: 'com-rang', name: 'Cơm rang', image: '/images/categories/breakfast 1.png' },
-    { id: 'canh-soup', name: 'Canh & Soup', image: '/images/categories/vegan food 1.png' }
+    { id: 'mon-chinh', name: 'Món chính', slug: 'mon-chinh', image: '/images/categories/pasta 1.png' },
+    { id: 'mon-an-vat', name: 'Món ăn vặt', slug: 'mon-an-vat', image: '/images/categories/pizza 1.png' },
+    { id: 'trang-mieng', name: 'Tráng miệng', slug: 'trang-mieng', image: '/images/categories/dessert 1.png' },
+    { id: 'do-uong', name: 'Đồ uống', slug: 'do-uong', image: '/images/categories/smoothie 1.png' },
+    { id: 'com-rang', name: 'Cơm rang', slug: 'com-rang', image: '/images/categories/breakfast 1.png' },
+    { id: 'canh-soup', name: 'Canh & Soup', slug: 'canh-soup', image: '/images/categories/vegan food 1.png' }
   ];
 
   for (const category of categories) {
@@ -54,10 +54,18 @@ async function main() {
         .replace(/\s+/g, '-')
         .substring(0, 50);
       
+      // Generate slug từ title
+      const slug = recipe.title
+        .toLowerCase()
+        .replace(/[^a-z0-9\s]/g, '')
+        .replace(/\s+/g, '-')
+        .substring(0, 50);
+      
       await prisma.recipe.upsert({
         where: { id },
         update: {
           title: recipe.title,
+          slug: slug,
           image: recipe.image,
           prepTime: recipe.prepTime,
           servings: recipe.servings,
@@ -68,6 +76,7 @@ async function main() {
         create: {
           id,
           title: recipe.title,
+          slug: slug,
           image: recipe.image,
           prepTime: recipe.prepTime,
           servings: recipe.servings,

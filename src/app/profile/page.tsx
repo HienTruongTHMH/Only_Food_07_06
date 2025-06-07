@@ -2,6 +2,20 @@
 
 import Image from "next/image";
 import { useState, useEffect } from "react";
+import { useRouter } from "next/navigation";
+
+interface UserProfile {
+  id: string;
+  name: string;
+  email: string;
+  createdAt: string;
+  updatedAt: string;
+  _count?: {
+    favorites: number;
+    comments: number;
+    reviews: number;
+  };
+}
 
 export default function ProfilePage() {
   const [formData, setFormData] = useState({
@@ -10,19 +24,83 @@ export default function ProfilePage() {
     email: "",
     password: "",
   });
+  const [userProfile, setUserProfile] = useState<UserProfile | null>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+  const router = useRouter();
 
   useEffect(() => {
-    const saved = localStorage.getItem("profileData");
-    const parsedData = JSON.parse(saved || "{}");
-    if (saved) {
-      setFormData({
-        fullName: parsedData.fullName,
-        username: parsedData.username,
-        email: parsedData.email,
-        password: parsedData.password,
-      });
-    }
-  }, []);
+    const loadProfile = async () => {
+      try {
+        const token = localStorage.getItem('authToken');
+        
+        if (!token) {
+          // User not logged in, load from localStorage as fallback
+          const saved = localStorage.getItem("profileData");
+          if (saved) {
+            const parsedData = JSON.parse(saved);
+            setFormData({
+              fullName: parsedData.fullName || "",
+              username: parsedData.username || "",
+              email: parsedData.email || "",
+              password: parsedData.password || "",
+            });
+          }
+          setLoading(false);
+          return;
+        }
+
+        // Fetch from API
+        const response = await fetch('/api/user/profile', {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (!response.ok) {
+          if (response.status === 401) {
+            localStorage.removeItem('authToken');
+            router.push('/login');
+            return;
+          }
+          throw new Error('Failed to load profile');
+        }
+
+        const data = await response.json();
+        setUserProfile(data.user);
+        setFormData({
+          fullName: data.user.name || "",
+          username: data.user.name || "", // Use name as username for now
+          email: data.user.email || "",
+          password: "", // Don't populate password field
+        });
+      } catch (error) {
+        console.error("Error loading profile:", error);
+        setError("Failed to load profile. Please try again.");
+        
+        // Fallback to localStorage
+        const saved = localStorage.getItem("profileData");
+        if (saved) {
+          try {
+            const parsedData = JSON.parse(saved);
+            setFormData({
+              fullName: parsedData.fullName || "",
+              username: parsedData.username || "",
+              email: parsedData.email || "",
+              password: parsedData.password || "",
+            });
+          } catch (fallbackError) {
+            console.error("Fallback error:", fallbackError);
+          }
+        }
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    loadProfile();
+  }, [router]);
 
   const handleInputChange = (field: string, value: string) => {
     setFormData((prev) => ({
@@ -31,9 +109,53 @@ export default function ProfilePage() {
     }));
   };
 
-  const handleSave = () => {
-    localStorage.setItem("profileData", JSON.stringify(formData));
-    alert("Đã lưu thông tin!");
+  const handleSave = async () => {
+    setSaving(true);
+    setError(null);
+    
+    try {
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        // Save to localStorage as fallback
+        localStorage.setItem("profileData", JSON.stringify(formData));
+        alert("Đã lưu thông tin!");
+        setSaving(false);
+        return;
+      }
+
+      // Save to API
+      const response = await fetch('/api/user/profile', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          name: formData.fullName,
+          email: formData.email,
+        }),
+      });
+
+      if (!response.ok) {
+        if (response.status === 401) {
+          localStorage.removeItem('authToken');
+          router.push('/login');
+          return;
+        }
+        const errorData = await response.json();
+        throw new Error(errorData.error || 'Failed to save profile');
+      }
+
+      const data = await response.json();
+      setUserProfile(data.user);
+      alert("Profile updated successfully!");
+    } catch (error: any) {
+      console.error("Error saving profile:", error);
+      setError(error.message || "Failed to save profile. Please try again.");
+    } finally {
+      setSaving(false);
+    }
   };
 
   const handleChangePhoto = () => {
@@ -52,24 +174,96 @@ export default function ProfilePage() {
     console.log("Unsubscribe from newsletter");
   };
 
-  const handleSignOut = () => {
-    console.log("Sign out");
+  const handleSignOut = async () => {
+    try {
+      // Clear auth token
+      localStorage.removeItem('authToken');
+      localStorage.removeItem('profileData'); // Clear old localStorage data too
+      
+      // Redirect to home page
+      router.push('/');
+    } catch (error) {
+      console.error("Sign out error:", error);
+    }
   };
 
-  const handleDeleteAccount = () => {
-    console.log("Delete account");
+  const handleDeleteAccount = async () => {
+    if (!confirm("Are you sure you want to delete your account? This action cannot be undone.")) {
+      return;
+    }
+    
+    try {
+      const token = localStorage.getItem('authToken');
+      
+      if (!token) {
+        localStorage.removeItem('profileData');
+        router.push('/');
+        return;
+      }
+
+      // TODO: Implement delete account API
+      console.log("Delete account - API not implemented yet");
+      
+      // For now, just sign out
+      handleSignOut();
+    } catch (error) {
+      console.error("Delete account error:", error);
+      setError("Failed to delete account. Please try again.");
+    }
   };
+
+  if (loading) {
+    return (
+      <div className="max-w-2xl mx-auto bg-white p-8">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-orange-500 mx-auto"></div>
+          <p className="mt-4 text-gray-600">Loading profile...</p>
+        </div>
+      </div>
+    );
+  }
+
+  if (error && !userProfile && !formData.email) {
+    return (
+      <div className="max-w-2xl mx-auto bg-white p-8">
+        <div className="text-center">
+          <p className="text-red-500 text-lg">{error}</p>
+          <button 
+            onClick={() => window.location.reload()} 
+            className="mt-4 px-4 py-2 bg-orange-500 text-white rounded hover:bg-orange-600"
+          >
+            Try Again
+          </button>
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="max-w-2xl mx-auto bg-white p-8">
       {/* Header */}
       <div className="flex items-center justify-between mb-8 pb-4 border-b border-gray-200">
-        <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+        <div>
+          <h1 className="text-2xl font-bold text-gray-900">Profile</h1>
+          {userProfile && (
+            <p className="text-sm text-gray-500 mt-1">
+              {userProfile._count && (
+                <>
+                  {userProfile._count.favorites} favorites • {userProfile._count.comments} comments • {userProfile._count.reviews} reviews
+                </>
+              )}
+            </p>
+          )}
+          {error && (
+            <p className="text-red-500 text-sm mt-1">{error}</p>
+          )}
+        </div>
         <button
           onClick={handleSave}
-          className="bg-orange-500 hover:bg-orange-600 text-white px-6 py-2 rounded-md font-medium transition-colors"
+          disabled={saving}
+          className="bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white px-6 py-2 rounded-md font-medium transition-colors"
         >
-          SAVE
+          {saving ? "SAVING..." : "SAVE"}
         </button>
       </div>
 

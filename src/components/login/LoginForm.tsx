@@ -1,28 +1,73 @@
 "use client";
 
-import { Lock, Mail, Eye, EyeOff } from "lucide-react"; // Added Eye and EyeOff for password visibility
+import { Lock, Mail } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react"; // Added useState
+import React, { useState } from "react";
+import { useRouter } from "next/navigation";
+import { useAuth } from "@/contexts/AuthContext";
 
 const LoginForm = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [formData, setFormData] = useState({
+    email: "",
+    password: "",
+  });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
+  
+  const { login } = useAuth();
+  const router = useRouter();
 
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setFormData(prev => ({
+      ...prev,
+      [name]: value
+    }));
+  };
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setLoading(true);
+    setError("");
+
+    if (!formData.email || !formData.password) {
+      setError("Please fill in all fields");
+      setLoading(false);
+      return;
+    }
+
+    const result = await login(formData.email, formData.password);
+    
+    if (result.success) {
+      router.push("/"); // Redirect to home page
+    } else {
+      setError(result.error || "Login failed");
+    }
+    
+    setLoading(false);
+  };
   return (
-    <div className="bg-gradient-to-br from-orange-100 via-red-100 to-pink-100 rounded-xl p-6 sm:p-8 md:p-10 w-full max-w-md mx-auto shadow-xl h-full flex flex-col justify-center">
-      <div className="text-center mb-8">
-        <h2 className="text-3xl font-bold text-gray-800">Welcome Back!</h2>
-        <p className="text-gray-600 mt-2">Login to continue your journey.</p>
-      </div>
-      <form className="space-y-6">
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Mail className="w-5 h-5 text-gray-400" />
-          </div>
+    <div className="bg-[#FFD8CA] rounded-xl p-6 w-full h-full">
+      <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
+      
+      {error && (
+        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+          {error}
+        </div>
+      )}
+      
+      <form className="space-y-6" onSubmit={handleSubmit}>
+        <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
+          <Mail className="w-4 h-4 text-gray-400" />
           <input
             type="email"
-            placeholder="your.email@example.com"
-            className="pl-10 pr-3 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-shadow duration-200"
+            name="email"
+            value={formData.email}
+            onChange={handleInputChange}
+            placeholder="Userexample@gmail.com"
+            className="ml-2 w-full outline-none bg-transparent"
+            disabled={loading}
           />
         </div>
         <div className="relative">
@@ -30,9 +75,13 @@ const LoginForm = () => {
             <Lock className="w-5 h-5 text-gray-400" />
           </div>
           <input
-            type={showPassword ? "text" : "password"}
-            placeholder="Enter your password"
-            className="pl-10 pr-10 py-3 w-full border border-gray-300 rounded-lg focus:ring-2 focus:ring-orange-400 focus:border-transparent outline-none transition-shadow duration-200"
+            type="password"
+            name="password"
+            value={formData.password}
+            onChange={handleInputChange}
+            placeholder="Password"
+            className="ml-2 w-full outline-none bg-transparent"
+            disabled={loading}
           />
           <button
             type="button"
@@ -49,9 +98,10 @@ const LoginForm = () => {
         </div>
         <button
           type="submit"
-          className="w-full bg-orange-500 hover:bg-orange-600 text-white py-3 rounded-lg font-semibold text-lg shadow-md hover:shadow-lg transition-all duration-300 transform hover:-translate-y-0.5"
+          disabled={loading}
+          className="w-full mt-2 bg-orange-500 hover:bg-orange-600 disabled:opacity-50 disabled:cursor-not-allowed text-white py-2 rounded-lg font-semibold"
         >
-          Login
+          {loading ? "Logging in..." : "Login"}
         </button>
       </form>
 

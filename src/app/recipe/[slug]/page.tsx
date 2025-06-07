@@ -5,6 +5,7 @@ import RecipeImage from "@/components/recipe/RecipeImage";
 import RecipeDescription from "@/components/recipe/RecipeDescription";
 import CommentsSection from "@/components/recipe/RecipeComments";
 import RelatedRecipes from "@/components/recipe/RelatedRecipes";
+import RecipeViewTracker from "@/components/recipe/RecipeViewTracker";
 
 interface RecipePageProps {
   params: {
