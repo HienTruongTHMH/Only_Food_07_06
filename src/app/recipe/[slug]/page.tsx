@@ -30,7 +30,7 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <RecipeImage recipe={recipe} />
         <RecipeDescription recipe={recipe} />
         <CommentsSection />
-        <RelatedRecipes currentRecipeId={recipe.id} />
+        <RelatedRecipes />
       </div>
     );
   } catch (error) {

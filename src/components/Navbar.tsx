@@ -3,7 +3,8 @@
 import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import SearchModal from "./SearchModal";
+import SearchModal from "@/components/SearchModal";
+import { Search } from "lucide-react";
 import { Menu, X, User, Heart, UserPlus, LogIn, LogOut } from "lucide-react";
 import { useAuth } from "@/contexts/AuthContext";
 
@@ -87,35 +88,35 @@ export default function Navbar() {
             >
               <div className="py-1">
                 <Link
-                  href="/recipes/category/trang-mieng"
+                  href="/recipe/category/trang-mieng"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
                   Tráng Miệng
                 </Link>
                 <Link
-                  href="/recipes/category/mon-chinh"
+                  href="/recipe/category/mon-chinh"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
                   Món Chính
                 </Link>
                 <Link
-                  href="/recipes/category/canh-soup"
+                  href="/recipe/category/canh-soup"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
                   Canh & Soup
                 </Link>
                 <Link
-                  href="/recipes/category/do-uong"
+                  href="/recipe/category/do-uong"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
                   Đồ Uống
                 </Link>
                 <Link
-                  href="/recipes/category/mon-an-vat"
+                  href="/recipe/category/mon-an-vat"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
