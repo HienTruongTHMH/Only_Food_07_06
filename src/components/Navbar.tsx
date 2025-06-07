@@ -4,18 +4,19 @@ import { useState, useRef, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import SearchModal from "./SearchModal";
-import { Menu, X, User, Heart, UserPlus, LogIn } from "lucide-react";
+import { Menu, X, User, Heart, UserPlus, LogIn, LogOut } from "lucide-react";
+import { useAuth } from "@/contexts/AuthContext";
 
 export default function Navbar() {
-  const [pagesOpen, setPagesOpen] = useState(false);
   const [recipeOpen, setRecipeOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [userMenuOpen, setUserMenuOpen] = useState(false); // ← Thêm user menu
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+  
+  const { user, logout } = useAuth();
 
   const recipeRef = useRef<HTMLDivElement>(null);
-  const pagesRef = useRef<HTMLDivElement>(null);
-  const userRef = useRef<HTMLDivElement>(null); // ← Thêm user ref
+  const userRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -24,12 +25,6 @@ export default function Navbar() {
         !recipeRef.current.contains(event.target as Node)
       ) {
         setRecipeOpen(false);
-      }
-      if (
-        pagesRef.current &&
-        !pagesRef.current.contains(event.target as Node)
-      ) {
-        setPagesOpen(false);
       }
       if (
         userRef.current &&
@@ -176,39 +171,75 @@ export default function Navbar() {
               }`}
             >
               <div className="py-1">
-                <Link
-                  href="/login"
-                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setUserMenuOpen(false)}
-                >
-                  <LogIn className="h-4 w-4 mr-2" />
-                  Login
-                </Link>
-                <Link
-                  href="/register"
-                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setUserMenuOpen(false)}
-                >
-                  <UserPlus className="h-4 w-4 mr-2" />
-                  Register
-                </Link>
-                <Link
-                  href="/profile"
-                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setUserMenuOpen(false)}
-                >
-                  <User className="h-4 w-4 mr-2" />
-                  Profile
-                </Link>
-                <hr className="my-1" />
-                <Link
-                  href="/favorites"
-                  className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setUserMenuOpen(false)}
-                >
-                  <Heart className="h-4 w-4 mr-2" />
-                  My Favorites
-                </Link>
+                {user ? (
+                  <>
+                    <div className="px-4 py-2 text-sm text-gray-500 border-b">
+                      Welcome, {user.fullName || user.email}
+                    </div>
+                    <Link
+                      href="/profile"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </Link>
+                    <Link
+                      href="/favorites"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      My Favorites
+                    </Link>
+                    <hr className="my-1" />
+                    <button
+                      onClick={() => {
+                        logout();
+                        setUserMenuOpen(false);
+                      }}
+                      className="flex items-center w-full px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 text-left"
+                    >
+                      <LogOut className="h-4 w-4 mr-2" />
+                      Logout
+                    </button>
+                  </>
+                ) : (
+                  <>
+                    <Link
+                      href="/login"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <LogIn className="h-4 w-4 mr-2" />
+                      Login
+                    </Link>
+                    <Link
+                      href="/register"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <UserPlus className="h-4 w-4 mr-2" />
+                      Register
+                    </Link>
+                    <Link
+                      href="/profile"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <User className="h-4 w-4 mr-2" />
+                      Profile
+                    </Link>
+                    <Link
+                      href="/favorites"
+                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                      onClick={() => setUserMenuOpen(false)}
+                    >
+                      <Heart className="h-4 w-4 mr-2" />
+                      My Favorites
+                    </Link>
+                  </>
+                )}
               </div>
             </div>
           </div>
@@ -249,41 +280,79 @@ export default function Navbar() {
               
               <hr className="my-2" />
               
-              <Link
-                href="/login"
-                className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <LogIn className="h-4 w-4 mr-2" />
-                Login
-              </Link>
-              
-              <Link
-                href="/register"
-                className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <UserPlus className="h-4 w-4 mr-2" />
-                Register
-              </Link>
-              
-              <Link
-                href="/profile"
-                className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <User className="h-4 w-4 mr-2" />
-                Profile
-              </Link>
-              
-              <Link
-                href="/favorites"
-                className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                onClick={() => setMobileMenuOpen(false)}
-              >
-                <Heart className="h-4 w-4 mr-2" />
-                Favorites
-              </Link>
+              {user ? (
+                <>
+                  <div className="px-0 py-2 text-sm text-gray-500">
+                    Welcome, {user.fullName || user.email}
+                  </div>
+                  <Link
+                    href="/profile"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Profile
+                  </Link>
+                  
+                  <Link
+                    href="/favorites"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Heart className="h-4 w-4 mr-2" />
+                    Favorites
+                  </Link>
+                  
+                  <button
+                    onClick={() => {
+                      logout();
+                      setMobileMenuOpen(false);
+                    }}
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900 w-full text-left"
+                  >
+                    <LogOut className="h-4 w-4 mr-2" />
+                    Logout
+                  </button>
+                </>
+              ) : (
+                <>
+                  <Link
+                    href="/login"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <LogIn className="h-4 w-4 mr-2" />
+                    Login
+                  </Link>
+                  
+                  <Link
+                    href="/register"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <UserPlus className="h-4 w-4 mr-2" />
+                    Register
+                  </Link>
+                  
+                  <Link
+                    href="/profile"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <User className="h-4 w-4 mr-2" />
+                    Profile
+                  </Link>
+                  
+                  <Link
+                    href="/favorites"
+                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
+                    onClick={() => setMobileMenuOpen(false)}
+                  >
+                    <Heart className="h-4 w-4 mr-2" />
+                    Favorites
+                  </Link>
+                </>
+              )}
             </div>
           </div>
         )}
