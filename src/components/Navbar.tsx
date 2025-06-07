@@ -42,7 +42,6 @@ export default function Navbar() {
   return (
     <>
       <header className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white">
-        {/* Logo - Clickable to Homepage */}
         <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
           <Image
             src="/images/logo.png"
@@ -88,32 +87,39 @@ export default function Navbar() {
             >
               <div className="py-1">
                 <Link
-                  href="/recipes"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setRecipeOpen(false)}
-                >
-                  All Recipes
-                </Link>
-                <Link
                   href="/recipes/category/trang-mieng"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Desserts
+                  Tráng Miệng
                 </Link>
                 <Link
                   href="/recipes/category/mon-chinh"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Main Dishes
+                  Món Chính
                 </Link>
                 <Link
                   href="/recipes/category/canh-soup"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Soups
+                  Canh & Soup
+                </Link>
+                <Link
+                  href="/recipes/category/do-uong"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setRecipeOpen(false)}
+                >
+                  Đồ Uống
+                </Link>
+                <Link
+                  href="/recipes/category/mon-an-vat"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setRecipeOpen(false)}
+                >
+                  Món Ăn Vặt
                 </Link>
               </div>
             </div>
@@ -122,44 +128,33 @@ export default function Navbar() {
 
         {/* Right Icons */}
         <div className="flex items-center space-x-4">
-          {/* Search Icon */}
+          {/* Enhanced Search Button */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="text-gray-700 hover:text-gray-900 transition-colors"
+            className="group relative p-2 text-gray-600 hover:text-orange-600 transition-all duration-200 hover:bg-orange-50 rounded-full"
             aria-label="Search recipes"
           >
-            <svg
-              className="h-5 w-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"
-              />
-            </svg>
+            <Search className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
+            <div className="absolute -top-1 -right-1 w-3 h-3 bg-orange-500 rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-200"></div>
           </button>
 
           {/* Favorites Icon */}
           <Link
             href="/favorites"
-            className="hidden sm:block text-gray-700 hover:text-red-500 transition-colors"
+            className="hidden sm:block p-2 text-gray-600 hover:text-red-500 transition-all duration-200 hover:bg-red-50 rounded-full group"
             aria-label="Your favorites"
           >
-            <Heart className="h-5 w-5" />
+            <Heart className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
           </Link>
 
           {/* User Menu */}
           <div className="relative" ref={userRef}>
             <button
               onClick={() => setUserMenuOpen(!userMenuOpen)}
-              className="hidden sm:block text-gray-700 hover:text-gray-900 transition-colors"
+              className="hidden sm:block p-2 text-gray-600 hover:text-gray-900 transition-all duration-200 hover:bg-gray-100 rounded-full group"
               aria-label="User menu"
             >
-              <User className="h-5 w-5" />
+              <User className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
             </button>
             
             {/* User Dropdown Menu */}
@@ -262,6 +257,20 @@ export default function Navbar() {
         {mobileMenuOpen && (
           <div className="absolute top-full left-0 right-0 bg-white shadow-lg border-t lg:hidden z-50">
             <div className="px-4 py-2 space-y-2">
+              {/* Mobile Search Button */}
+              <button
+                onClick={() => {
+                  setSearchOpen(true);
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center w-full py-2 text-gray-700 hover:text-orange-600"
+              >
+                <Search className="h-4 w-4 mr-2" />
+                Tìm kiếm món ăn
+              </button>
+              
+              <hr className="my-2" />
+              
               <Link
                 href="/"
                 className="block py-2 text-red-500 hover:text-red-600 font-medium"

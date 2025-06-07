@@ -70,8 +70,10 @@ const LoginForm = () => {
             disabled={loading}
           />
         </div>
-        <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
-          <Lock className="w-4 h-4 text-gray-400" />
+        <div className="relative">
+          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
+            <Lock className="w-5 h-5 text-gray-400" />
+          </div>
           <input
             type="password"
             name="password"
@@ -81,6 +83,18 @@ const LoginForm = () => {
             className="ml-2 w-full outline-none bg-transparent"
             disabled={loading}
           />
+          <button
+            type="button"
+            onClick={() => setShowPassword(!showPassword)}
+            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+            aria-label={showPassword ? "Hide password" : "Show password"}
+          >
+            {showPassword ? (
+              <EyeOff className="w-5 h-5" />
+            ) : (
+              <Eye className="w-5 h-5" />
+            )}
+          </button>
         </div>
         <button
           type="submit"
@@ -91,26 +105,35 @@ const LoginForm = () => {
         </button>
       </form>
 
-      <div className="text-center my-4 text-gray-500">Or continue with</div>
+      <div className="my-6 flex items-center">
+        <div className="flex-grow border-t border-gray-300"></div>
+        <span className="mx-4 text-sm text-gray-500">Or continue with</span>
+        <div className="flex-grow border-t border-gray-300"></div>
+      </div>
+
       <div className="flex justify-center gap-4">
-        <button className="bg-white px-10 rounded-full p-2 hover:shadow">
-          <Image src="/images/google.png" alt="Google" width={20} height={20} />
+        <button className="bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 flex items-center justify-center w-12 h-12">
+          <Image src="/images/google.png" alt="Google" width={24} height={24} />
         </button>
-        <button className="bg-white px-10 rounded-full p-2 hover:shadow">
+        <button className="bg-white p-3 rounded-full shadow-md hover:shadow-lg transition-shadow duration-200 flex items-center justify-center w-12 h-12">
           <Image
             src="/images/facebook.png"
             alt="Facebook"
-            width={20}
-            height={20}
+            width={24}
+            height={24}
           />
         </button>
       </div>
-      <span className="text-center text-gray-500 block mt-4">
-        Already haven&apos;t an account?{" "}
-        <Link href="/register" className="text-orange-500">
-          Register
+
+      <p className="text-center text-gray-600 text-sm mt-8">
+        Don&apos;t have an account yet?{" "}
+        <Link
+          href="/register"
+          className="text-orange-500 hover:text-orange-600 font-semibold hover:underline"
+        >
+          Register Now
         </Link>
-      </span>
+      </p>
     </div>
   );
 };

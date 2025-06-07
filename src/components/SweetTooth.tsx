@@ -41,7 +41,7 @@ export default async function SweetTooth({ recipes }: SweetToothProps) {
 
     return (
       <section className="mt-12">
-        <h2 className="text-2xl font-bold mb-6">Sweet Tooth</h2>
+        <h2 className="text-2xl font-bold mb-6">Món Tráng Miệng</h2>
         <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {fallbackItems.map((item) => (
             <FoodCard key={item.id} {...item} />
@@ -53,7 +53,7 @@ export default async function SweetTooth({ recipes }: SweetToothProps) {
 
   return (
     <section className="mt-12">
-      <h2 className="text-2xl font-bold mb-6">Sweet Tooth</h2>
+      <h2 className="text-2xl font-bold mb-6">Món Tráng Miệng</h2>
       <div className="w-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {displayRecipes.map((recipe) => (
           <FoodCard 

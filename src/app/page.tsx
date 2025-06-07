@@ -3,7 +3,6 @@ import SuperDelicious from "@/components/SuperDelicious";
 import SweetTooth from "@/components/SweetTooth";
 import PopularCategories from "@/components/PopularCategories";
 import EmailSendSection from "@/components/EmailSendSection";
-import CollectionSections from "@/components/CollectionSections";
 import LastRecipes from "@/components/LastRecipes";
 import { getFeaturedRecipes, getDessertRecipes, getRecipes } from "@/data/recipe-service";
 
@@ -22,7 +21,6 @@ export default async function HomePage() {
       </div>
       <EmailSendSection />
       <div className="max-w-6xl mx-auto px-4 py-8">
-        <CollectionSections />
         <LastRecipes recipes={allRecipes} />
       </div>
     </main>
