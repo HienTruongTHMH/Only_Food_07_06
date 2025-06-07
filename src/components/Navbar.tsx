@@ -15,7 +15,7 @@ export default function Navbar() {
 
   const recipeRef = useRef<HTMLDivElement>(null);
   const pagesRef = useRef<HTMLDivElement>(null);
-  const userRef = useRef<HTMLDivElement>(null); // ← Thêm user ref
+  const userRef = useRef<HTMLDivElement>(null); 
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -47,7 +47,6 @@ export default function Navbar() {
   return (
     <>
       <header className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white">
-        {/* Logo - Clickable to Homepage */}
         <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
           <Image
             src="/images/logo.png"
@@ -93,32 +92,39 @@ export default function Navbar() {
             >
               <div className="py-1">
                 <Link
-                  href="/recipes"
-                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                  onClick={() => setRecipeOpen(false)}
-                >
-                  All Recipes
-                </Link>
-                <Link
                   href="/recipes/category/trang-mieng"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Desserts
+                  Tráng Miệng
                 </Link>
                 <Link
                   href="/recipes/category/mon-chinh"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Main Dishes
+                  Món Chính
                 </Link>
                 <Link
                   href="/recipes/category/canh-soup"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Soups
+                  Canh & Soup
+                </Link>
+                <Link
+                  href="/recipes/category/do-uong"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setRecipeOpen(false)}
+                >
+                  Đồ Uống
+                </Link>
+                <Link
+                  href="/recipes/category/mon-an-vat"
+                  className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
+                  onClick={() => setRecipeOpen(false)}
+                >
+                  Món Ăn Vặt
                 </Link>
               </div>
             </div>
