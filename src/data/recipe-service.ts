@@ -22,6 +22,59 @@ export async function getRecipes(): Promise<Recipe[]> {
   return recipes;
 }
 
+// Search recipes
+export async function searchRecipes(searchTerm: string): Promise<Recipe[]> {
+  try {
+    console.log(`🔍 searchRecipes: Searching for "${searchTerm}"`);
+    
+    if (!searchTerm || searchTerm.trim().length === 0) {
+      return [];
+    }
+
+    const term = searchTerm.trim().toLowerCase();
+    
+    const recipes = await prisma.recipe.findMany({
+      where: {
+        OR: [
+          {
+            title: {
+              contains: term,
+              mode: 'insensitive'
+            }
+          },
+          {
+            ingredients: {
+              hasSome: [term]
+            }
+          },
+          {
+            category: {
+              contains: term,
+              mode: 'insensitive'
+            }
+          }
+        ]
+      },
+      take: 20, // Giới hạn 20 kết quả
+      orderBy: [
+        {
+          // Ưu tiên những món có tên chứa từ khóa
+          title: 'asc'
+        },
+        {
+          createdAt: 'desc'
+        }
+      ]
+    });
+
+    console.log(`✅ searchRecipes: Found ${recipes.length} recipes`);
+    return recipes;
+  } catch (error) {
+    console.error('❌ searchRecipes error:', error);
+    return [];
+  }
+}
+
 // Get recipe by slug/id
 export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
   console.log(`🔍 getRecipeBySlug: Searching for recipe with slug: ${slug}`);
@@ -102,21 +155,17 @@ export async function getDessertRecipes(): Promise<Recipe[]> {
   }
 }
 
-// Get related recipes
-export async function getRelatedRecipes(currentRecipeId: string): Promise<Recipe[]> {
+export async function getPopularRecipes(): Promise<Recipe[]> {
   try {
-    console.log('🔍 getRelatedRecipes: Fetching related recipes...');
+    console.log('🔍 getPopularRecipes: Fetching popular recipes...');
     const recipes = await prisma.recipe.findMany({
-      where: { 
-        NOT: { id: currentRecipeId }
-      },
-      take: 3,
+      take: 6,
       orderBy: { createdAt: 'desc' }
     });
-    console.log('✅ getRelatedRecipes: Found', recipes.length, 'recipes');
+    console.log('✅ getPopularRecipes: Found', recipes.length, 'recipes');
     return recipes;
   } catch (error) {
-    console.error('❌ getRelatedRecipes error:', error);
+    console.error('❌ getPopularRecipes error:', error);
     return [];
   }
 }
