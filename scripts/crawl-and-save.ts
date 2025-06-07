@@ -9,7 +9,8 @@ const cookpadUrls = [
   "https://cookpad.com/vn/cong-thuc/22607339-th%E1%BB%8Bt-rang-th%C6%A1mkhom?ref=search_top",
   "https://cookpad.com/vn/cong-thuc/21880856-th%E1%BB%8Bt-ba-r%E1%BB%8Di-rang-n%C6%B0%E1%BB%9Bc-m%E1%BA%AFm?ref=search_top",
   "https://cookpad.com/vn/cong-thuc/17280882-th%E1%BB%8Bt-xay-rang-hanh-va-ca-r%E1%BB%91t?ref=search_top",
-  "https://cookpad.com/vn/cong-thuc/11314511-th%E1%BB%8Bt-ba-ch%E1%BB%89-rang-tom?ref=search_top"
+  "https://cookpad.com/vn/cong-thuc/11314511-th%E1%BB%8Bt-ba-ch%E1%BB%89-rang-tom?ref=search_top",
+  "https://cookpad.com/vn/cong-thuc/24795988-l%E1%BA%A9u-tr%E1%BB%A9ng-l%E1%BB%99n?ref=search&find_method=search_top&search_term=m%C3%B3n+ngon+m%E1%BB%97i+ng%C3%A0y"
 ];
 
 async function seedCategories() {

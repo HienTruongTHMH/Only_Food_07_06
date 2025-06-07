@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { getCategories } from "@/data/recipes";
+import { getCategories } from "@/data/recipe-service";
 
 export default async function PopularCategories() {
   const categories = await getCategories();

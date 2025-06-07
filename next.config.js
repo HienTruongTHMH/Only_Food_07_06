@@ -1,6 +1,5 @@
-import type { NextConfig } from "next";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -11,19 +10,13 @@ const nextConfig: NextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'cookpad.com',
-        port: '',
-        pathname: '/**',
-      },
-      {
-        protocol: 'https',
         hostname: 'example.com',
         port: '',
         pathname: '/**',
       },
-      // Thêm các hostname khác nếu cần thiết
+      // Thêm các hostname khác nếu cần
     ],
   },
-};
+}
 
-export default nextConfig;
+module.exports = nextConfig
