@@ -4,7 +4,7 @@ import { Eye, EyeOff, Mail, Lock, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useEffect, useState } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 const LoginForm = () => {
@@ -19,29 +19,31 @@ const LoginForm = () => {
 
   const { login } = useAuth();
   const router = useRouter();
-  const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Check if user was redirected from registration
-    const registered = searchParams.get("registered");
-    const email = searchParams.get("email");
+    // Check if user was redirected from registration using window.location
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      const registered = urlParams.get("registered");
+      const email = urlParams.get("email");
 
-    if (registered === "true") {
-      setSuccessMessage(
-        "Account created successfully! Please sign in with your credentials."
-      );
-      if (email) {
-        setFormData((prev) => ({ ...prev, email: decodeURIComponent(email) }));
+      if (registered === "true") {
+        setSuccessMessage(
+          "Account created successfully! Please sign in with your credentials."
+        );
+        if (email) {
+          setFormData((prev) => ({ ...prev, email: decodeURIComponent(email) }));
+        }
+
+        // Clear the success message after 5 seconds
+        const timer = setTimeout(() => {
+          setSuccessMessage("");
+        }, 5000);
+
+        return () => clearTimeout(timer);
       }
-
-      // Clear the success message after 5 seconds
-      const timer = setTimeout(() => {
-        setSuccessMessage("");
-      }, 5000);
-
-      return () => clearTimeout(timer);
     }
-  }, [searchParams]);
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -92,13 +94,14 @@ const LoginForm = () => {
       setLoading(false);
     }
   };
+
   return (
     <div className="bg-[#FFD8CA] rounded-xl p-6 w-full h-full">
       <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
 
       {/* Success Message */}
       {successMessage && (
-        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-start">
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-start mb-4">
           <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
           <span>{successMessage}</span>
         </div>
@@ -106,7 +109,7 @@ const LoginForm = () => {
 
       {/* Error Message */}
       {error && (
-        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm mb-4">
           {error}
         </div>
       )}
