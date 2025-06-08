@@ -108,11 +108,11 @@ export default function DebugPage() {
   return (
     <div className="p-8 max-w-4xl mx-auto">
       <h1 className="text-3xl font-bold mb-6">🔍 Database Debug Page</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
+      {/* <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         <DatabaseStats recipeCount={recipeCount} categoryCount={categoryCount} />
         <CategoriesList categories={categories} />
       </div>
-      <RecipesList recipes={recipes} />
+      <RecipesList recipes={recipes} /> */}
       <div className="max-w-4xl mx-auto px-4 py-8">
         <h1 className="text-3xl font-bold mb-6">Debug Information</h1>
         <pre className="bg-gray-100 p-4 rounded-lg overflow-auto">
