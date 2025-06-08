@@ -1,10 +1,10 @@
 "use client";
 
-import { Lock, Mail, Eye, EyeOff } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, CheckCircle } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useEffect, useState } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAuth } from "@/contexts/AuthContext";
 
 const LoginForm = () => {
@@ -15,49 +15,102 @@ const LoginForm = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
-  
+  const [successMessage, setSuccessMessage] = useState("");
+
   const { login } = useAuth();
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Check if user was redirected from registration
+    const registered = searchParams.get("registered");
+    const email = searchParams.get("email");
+
+    if (registered === "true") {
+      setSuccessMessage(
+        "Account created successfully! Please sign in with your credentials."
+      );
+      if (email) {
+        setFormData((prev) => ({ ...prev, email: decodeURIComponent(email) }));
+      }
+
+      // Clear the success message after 5 seconds
+      const timer = setTimeout(() => {
+        setSuccessMessage("");
+      }, 5000);
+
+      return () => clearTimeout(timer);
+    }
+  }, [searchParams]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
+    // Clear error when user starts typing
+    if (error) setError("");
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
     setError("");
+    setSuccessMessage(""); // Clear success message when attempting login
 
+    // Validation
     if (!formData.email || !formData.password) {
       setError("Please fill in all fields");
       setLoading(false);
       return;
     }
 
-    const result = await login(formData.email, formData.password);
-    
-    if (result.success) {
-      router.push("/"); // Redirect to home page
-    } else {
-      setError(result.error || "Login failed");
+    try {
+      const response = await fetch("/api/auth/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(formData),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        throw new Error(data.error || "Login failed");
+      }
+
+      // Store token
+      localStorage.setItem("authToken", data.token);
+
+      // Redirect to home or dashboard
+      router.push("/");
+    } catch (error: any) {
+      setError(error.message || "Something went wrong. Please try again.");
+    } finally {
+      setLoading(false);
     }
-    
-    setLoading(false);
   };
   return (
     <div className="bg-[#FFD8CA] rounded-xl p-6 w-full h-full">
       <h2 className="text-2xl font-semibold text-center mb-6">Login</h2>
-      
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="bg-green-50 border border-green-200 text-green-700 px-4 py-3 rounded-lg text-sm flex items-start">
+          <CheckCircle className="w-5 h-5 text-green-500 mr-2 mt-0.5 flex-shrink-0" />
+          <span>{successMessage}</span>
+        </div>
+      )}
+
+      {/* Error Message */}
       {error && (
-        <div className="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded mb-4">
+        <div className="bg-red-50 border border-red-200 text-red-600 px-4 py-3 rounded-lg text-sm">
           {error}
         </div>
       )}
-      
+
       <form className="space-y-6" onSubmit={handleSubmit}>
         <div className="flex items-center border rounded-lg px-3 py-2 bg-white">
           <Mail className="w-4 h-4 text-gray-400" />
