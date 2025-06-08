@@ -12,7 +12,7 @@ export async function GET(request: NextRequest) {
 
     const searchTerm = query.trim();
     
-    // Tìm kiếm trong title
+    // Search in title and ingredients
     const recipes = await prisma.recipe.findMany({
       where: {
         OR: [
@@ -23,14 +23,27 @@ export async function GET(request: NextRequest) {
             }
           },
           {
-            // Tìm kiếm trong ingredients nếu có
+            // Search in category
+            category: {
+              contains: searchTerm,
+              mode: 'insensitive'
+            }
+          },
+          {
+            // Search in ingredients array
             ingredients: {
+              hasSome: searchTerm.split(' ')
+            }
+          },
+          {
+            // Search in tags array
+            tags: {
               hasSome: searchTerm.split(' ')
             }
           }
         ]
       },
-      take: 10, // Giới hạn 10 kết quả
+      take: 15, // Limit to 15 results
       orderBy: {
         createdAt: 'desc'
       }
@@ -41,7 +54,7 @@ export async function GET(request: NextRequest) {
   } catch (error) {
     console.error('Search API error:', error);
     return NextResponse.json(
-      { error: 'Lỗi khi tìm kiếm' },
+      { error: 'Error while searching' },
       { status: 500 }
     );
   }
