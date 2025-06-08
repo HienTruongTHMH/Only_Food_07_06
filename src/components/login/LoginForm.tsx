@@ -1,6 +1,6 @@
 "use client";
 
-import { Lock, Mail } from "lucide-react";
+import { Lock, Mail, Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
@@ -14,6 +14,7 @@ const LoginForm = () => {
   });
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   
   const { login } = useAuth();
   const router = useRouter();
@@ -70,23 +71,21 @@ const LoginForm = () => {
             disabled={loading}
           />
         </div>
-        <div className="relative">
-          <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
-            <Lock className="w-5 h-5 text-gray-400" />
-          </div>
+        <div className="flex items-center border rounded-lg px-3 py-2 bg-white relative">
+          <Lock className="w-4 h-4 text-gray-400" />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             name="password"
             value={formData.password}
             onChange={handleInputChange}
             placeholder="Password"
-            className="ml-2 w-full outline-none bg-transparent"
+            className="ml-2 w-full outline-none bg-transparent pr-10"
             disabled={loading}
           />
-          {/* <button
+          <button
             type="button"
             onClick={() => setShowPassword(!showPassword)}
-            className="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-500 hover:text-gray-700"
+            className="absolute right-3 text-gray-500 hover:text-gray-700"
             aria-label={showPassword ? "Hide password" : "Show password"}
           >
             {showPassword ? (
@@ -94,7 +93,7 @@ const LoginForm = () => {
             ) : (
               <Eye className="w-5 h-5" />
             )}
-          </button> */}
+          </button>
         </div>
         <button
           type="submit"

@@ -36,6 +36,29 @@ const nextConfig: NextConfig = {
     // Disable TypeScript type checking during builds
     ignoreBuildErrors: true,
   },
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'img-global.cpcdn.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'cookpad.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+        port: '',
+        pathname: '/**',
+      },
+      // Thêm các hostname khác nếu cần thiết
+    ],
+  },
 };
 
 export default nextConfig;
