@@ -59,17 +59,16 @@ export default function Hero() {
 
       <div className="w-full lg:w-2/5 p-6 sm:p-8 lg:p-10 order-1 lg:order-2 flex flex-col justify-center">
         <div className="flex flex-row items-center space-x-2 mb-4 lg:mb-6">
-          <TrendingUp className="w-5 h-5 lg:w-6 lg:h-6 text-[#FF642F]" />
+          {/* <TrendingUp className="w-5 h-5 lg:w-6 lg:h-6 text-[#FF642F]" /> */}
           <p className="text-sm sm:text-base font-medium text-gray-700">
-            85% would make this again
+            About Us!!!
           </p>
         </div>
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-gray-800 leading-tight">
-          Mighty Super Cheesecake
+          Welcome to Our Web Recipes
         </h1>
         <p className="mt-3 text-base sm:text-lg text-gray-600">
-          Look no further for a creamy and ultra smooth classic cheesecake
-          recipe! No one can deny its simple decadence.
+          Discover delicious, easy-to-make recipes – where every dish tells a story of love and flavor!
         </p>
       </div>
     </div>
