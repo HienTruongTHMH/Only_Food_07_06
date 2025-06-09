@@ -42,7 +42,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="flex items-center justify-between px-4 sm:px-6 py-4 bg-white">
+      <header className="relative flex items-center justify-between px-4 sm:px-6 py-4 bg-white">
         <Link href="/" className="flex items-center hover:opacity-80 transition-opacity">
           <Image
             src="/images/logo.png"

@@ -13,7 +13,6 @@ export async function getCategories(): Promise<Category[]> {
     return [];
   }
 }
-
 // Get all recipes
 export async function getRecipes(): Promise<Recipe[]> {
   const recipes = await prisma.recipe.findMany({
@@ -109,6 +108,40 @@ export async function getRecipeBySlug(slug: string): Promise<Recipe | null> {
     };
   } catch (error) {
     console.error('❌ getRecipeBySlug error:', error);
+    return null;
+  }
+}
+
+// Get recipe by ID
+export async function getRecipeById(id: string): Promise<Recipe | null> {
+  console.log(`🔍 getRecipeById: Searching for recipe with ID: ${id}`);
+  
+  try {
+    const recipe = await prisma.recipe.findUnique({ 
+      where: { id } 
+    });
+    
+    if (!recipe) {
+      console.log(`❌ getRecipeById: Recipe not found for ID: ${id}`);
+      return null;
+    }
+
+    console.log(`✅ getRecipeById: Found recipe: ${recipe.title}`);
+    
+    return {
+      id: recipe.id,
+      title: recipe.title,
+      image: recipe.image,
+      ingredients: recipe.ingredients || [],
+      instructions: recipe.instructions || [],
+      prepTime: recipe.prepTime || 30,
+      servings: recipe.servings || 4,
+      category: recipe.category || '',
+      slug: recipe.slug || recipe.id,
+      createdAt: recipe.createdAt
+    };
+  } catch (error) {
+    console.error('❌ getRecipeById error:', error);
     return null;
   }
 }
