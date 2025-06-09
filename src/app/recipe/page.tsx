@@ -22,10 +22,10 @@ export default async function RecipesPage() {
       {/* Header Section */}
       <div className="mb-8">
         <h1 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-          Tất Cả Công Thức
+          All Recipes
         </h1>
         <p className="text-gray-600 text-lg">
-          Khám phá hàng trăm công thức nấu ăn ngon và dễ làm
+          Discover hundreds of delicious and easy-to-make recipes
         </p>
       </div>
 
@@ -37,7 +37,7 @@ export default async function RecipesPage() {
               <svg className="w-3 h-3 mr-2.5" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                 <path d="m19.707 9.293-2-2-7-7a1 1 0 0 0-1.414 0l-7 7-2 2a1 1 0 0 0 1.414 1.414L2 10.414V18a2 2 0 0 0 2 2h3a1 1 0 0 0 1-1v-4a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v4a1 1 0 0 0 1 1h3a2 2 0 0 0 2-2v-7.586l.293.293a1 1 0 0 0 1.414-1.414Z"/>
               </svg>
-              Trang Chủ
+              Home Page
             </a>
           </li>
           <li aria-current="page">
@@ -75,7 +75,7 @@ export default async function RecipesPage() {
       {recipes.length > 0 && (
         <div className="mb-6">
           <p className="text-gray-600">
-            Tìm thấy <span className="font-semibold text-gray-900">{recipes.length}</span> công thức nấu ăn
+            Found <span className="font-semibold text-gray-900">{recipes.length}</span> recipes
           </p>
         </div>
       )}
@@ -102,16 +102,16 @@ export default async function RecipesPage() {
             </svg>
           </div>
           <h3 className="text-lg font-medium text-gray-900 mb-2">
-            Chưa có công thức nấu ăn
+            No recipes found
           </h3>
           <p className="text-gray-600 mb-6">
-            Hiện tại chưa có công thức nào. Hãy quay lại sau để khám phá những món ăn mới nhé!
+            Currently, there are no recipes available. Please check back later to discover new dishes!
           </p>
           <a
             href="/"
             className="inline-flex items-center px-4 py-2 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-red-600 hover:bg-red-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-red-500"
           >
-            Về trang chủ
+            Back to Home Page
           </a>
         </div>
       )}
