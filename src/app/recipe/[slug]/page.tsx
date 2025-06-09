@@ -20,9 +20,6 @@ export default async function RecipePage({ params }: RecipePageProps) {
     if (!recipe) {
       notFound();
     } 
-    if (!recipe) {
-      notFound();
-    }
 
     return (
       <div className="max-w-5xl mx-auto px-4 py-8">
@@ -30,7 +27,10 @@ export default async function RecipePage({ params }: RecipePageProps) {
         <RecipeImage recipe={recipe} />
         <RecipeDescription recipe={recipe} />
         <CommentsSection />
-        <RelatedRecipes />
+        <RelatedRecipes 
+          currentRecipeId={recipe.id} 
+          category={recipe.category} 
+        />
       </div>
     );
   } catch (error) {
