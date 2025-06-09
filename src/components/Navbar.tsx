@@ -56,7 +56,7 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8">
           <Link href="/" className="text-red-500 hover:text-red-600 font-medium">
-            Trang Chủ
+            Home Page
           </Link>
 
           <div className="relative" ref={recipeRef}>
@@ -64,7 +64,7 @@ export default function Navbar() {
               className="flex items-center text-gray-700 hover:text-gray-900 font-medium"
               onClick={() => setRecipeOpen(!recipeOpen)}
             >
-              Công Thức
+              Recipes
               <svg
                 className="ml-1 h-4 w-4"
                 fill="none"
@@ -92,35 +92,35 @@ export default function Navbar() {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Tráng Miệng
+                  Desserts
                 </Link>
                 <Link
                   href="/recipe/category/mon-chinh"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Món Chính
+                  Main Dishes
                 </Link>
                 <Link
                   href="/recipe/category/canh-soup"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Canh & Soup
+                  Soup
                 </Link>
                 <Link
                   href="/recipe/category/do-uong"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Đồ Uống
+                  Drinks
                 </Link>
                 <Link
                   href="/recipe/category/mon-an-vat"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Món Ăn Vặt
+                  Snacks
                 </Link>
               </div>
             </div>
