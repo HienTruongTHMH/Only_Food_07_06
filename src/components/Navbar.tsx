@@ -56,7 +56,7 @@ export default function Navbar() {
         {/* Desktop Navigation */}
         <nav className="hidden lg:flex items-center space-x-8">
           <Link href="/" className="text-red-500 hover:text-red-600 font-medium">
-            Trang Chủ
+            Home Page
           </Link>
 
           <div className="relative" ref={recipeRef}>
@@ -64,7 +64,7 @@ export default function Navbar() {
               className="flex items-center text-gray-700 hover:text-gray-900 font-medium"
               onClick={() => setRecipeOpen(!recipeOpen)}
             >
-              Công Thức
+              Recipes
               <svg
                 className="ml-1 h-4 w-4"
                 fill="none"
@@ -92,35 +92,35 @@ export default function Navbar() {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Tráng Miệng
+                  Sweet Tooth
                 </Link>
                 <Link
                   href="/recipe/category/mon-chinh"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Món Chính
+                  Main Dishes
                 </Link>
                 <Link
                   href="/recipe/category/canh-soup"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Canh & Soup
+                  Soup
                 </Link>
                 <Link
                   href="/recipe/category/do-uong"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Đồ Uống
+                  Drinks
                 </Link>
                 <Link
                   href="/recipe/category/mon-an-vat"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Món Ăn Vặt
+                  Snacks
                 </Link>
               </div>
             </div>
@@ -158,7 +158,7 @@ export default function Navbar() {
               <User className="h-5 w-5 group-hover:scale-110 transition-transform duration-200" />
             </button>
             
-            {/* User Dropdown Menu */}
+            {/* User Dropdown Menu - Desktop */}
             <div
               className={`absolute right-0 z-10 mt-2 w-48 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 transition-all duration-200 origin-top-right ${
                 userMenuOpen
@@ -218,22 +218,6 @@ export default function Navbar() {
                       <UserPlus className="h-4 w-4 mr-2" />
                       Register
                     </Link>
-                    <Link
-                      href="/profile"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <User className="h-4 w-4 mr-2" />
-                      Profile
-                    </Link>
-                    <Link
-                      href="/favorites"
-                      className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
-                      onClick={() => setUserMenuOpen(false)}
-                    >
-                      <Heart className="h-4 w-4 mr-2" />
-                      My Favorites
-                    </Link>
                   </>
                 )}
               </div>
@@ -267,7 +251,7 @@ export default function Navbar() {
                 className="flex items-center w-full py-2 text-gray-700 hover:text-orange-600"
               >
                 <Search className="h-4 w-4 mr-2" />
-                Tìm kiếm món ăn
+                Searching for recipes
               </button>
               
               <hr className="my-2" />
@@ -342,24 +326,6 @@ export default function Navbar() {
                   >
                     <UserPlus className="h-4 w-4 mr-2" />
                     Register
-                  </Link>
-                  
-                  <Link
-                    href="/profile"
-                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <User className="h-4 w-4 mr-2" />
-                    Profile
-                  </Link>
-                  
-                  <Link
-                    href="/favorites"
-                    className="flex items-center py-2 text-gray-700 hover:text-gray-900"
-                    onClick={() => setMobileMenuOpen(false)}
-                  >
-                    <Heart className="h-4 w-4 mr-2" />
-                    Favorites
                   </Link>
                 </>
               )}
