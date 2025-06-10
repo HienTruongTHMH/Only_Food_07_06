@@ -3,8 +3,8 @@
 import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import React, { useState } from "react";
-import { useRouter } from "next/navigation";
+import React, { useState, useEffect } from "react";
+import { useRouter, useSearchParams } from "next/navigation";
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -17,7 +17,28 @@ const RegisterForm = () => {
   const [error, setError] = useState("");
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+  const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    // Check for email from EmailSendSection
+    const emailFromParams = searchParams.get('email');
+    if (emailFromParams) {
+      setFormData(prev => ({
+        ...prev,
+        email: emailFromParams
+      }));
+    }
+
+    // Check if user was redirected from registration
+    const registered = searchParams.get("registered");
+    const email = searchParams.get("email");
+    
+    if (registered === "true") {
+      setSuccessMessage(`Đăng ký thành công! Vui lòng đăng nhập với email: ${email}`);
+    }
+  }, [searchParams]);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -85,6 +106,13 @@ const RegisterForm = () => {
   return (
     <div className="bg-[#FFD8CA] rounded-xl p-6 w-full h-full">
       <h2 className="text-2xl font-semibold text-center mb-6">Register Account</h2>
+
+      {/* Success Message */}
+      {successMessage && (
+        <div className="bg-green-50 border border-green-200 text-green-600 px-4 py-3 rounded-lg text-sm mb-4">
+          {successMessage}
+        </div>
+      )}
 
       {/* Error Message */}
       {error && (
