@@ -57,7 +57,6 @@ export default function Navbar() {
         <nav className="hidden lg:flex items-center space-x-8">
           <Link href="/" className="text-red-500 hover:text-red-600 font-medium">
             Home Page
-            Home Page
           </Link>
 
           <div className="relative" ref={recipeRef}>
@@ -65,7 +64,6 @@ export default function Navbar() {
               className="flex items-center text-gray-700 hover:text-gray-900 font-medium"
               onClick={() => setRecipeOpen(!recipeOpen)}
             >
-              Recipes
               Recipes
               <svg
                 className="ml-1 h-4 w-4"
@@ -101,7 +99,7 @@ export default function Navbar() {
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Main Dishes
+                  
                   Main Dishes
                 </Link>
                 <Link
@@ -110,7 +108,6 @@ export default function Navbar() {
                   onClick={() => setRecipeOpen(false)}
                 >
                   Soup
-                  Soup
                 </Link>
                 <Link
                   href="/recipe/category/do-uong"
@@ -118,14 +115,12 @@ export default function Navbar() {
                   onClick={() => setRecipeOpen(false)}
                 >
                   Drinks
-                  Drinks
                 </Link>
                 <Link
                   href="/recipe/category/mon-an-vat"
                   className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100"
                   onClick={() => setRecipeOpen(false)}
                 >
-                  Snacks
                   Snacks
                 </Link>
               </div>

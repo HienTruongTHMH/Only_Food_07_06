@@ -4,7 +4,7 @@ import { Eye, EyeOff, User, Mail, Lock } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState, useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useRouter } from "next/navigation"; // Xóa useSearchParams
 
 const RegisterForm = () => {
   const [formData, setFormData] = useState({
@@ -19,26 +19,31 @@ const RegisterForm = () => {
   const [showConfirmPassword, setShowConfirmPassword] = useState(false);
   const [successMessage, setSuccessMessage] = useState("");
   const router = useRouter();
-  const searchParams = useSearchParams();
+  // Xóa: const searchParams = useSearchParams();
 
   useEffect(() => {
-    // Check for email from EmailSendSection
-    const emailFromParams = searchParams.get('email');
-    if (emailFromParams) {
-      setFormData(prev => ({
-        ...prev,
-        email: emailFromParams
-      }));
-    }
+    // Thay thế useSearchParams bằng window.location
+    if (typeof window !== 'undefined') {
+      const urlParams = new URLSearchParams(window.location.search);
+      
+      // Check for email from EmailSendSection
+      const emailFromParams = urlParams.get('email');
+      if (emailFromParams) {
+        setFormData(prev => ({
+          ...prev,
+          email: emailFromParams
+        }));
+      }
 
-    // Check if user was redirected from registration
-    const registered = searchParams.get("registered");
-    const email = searchParams.get("email");
-    
-    if (registered === "true") {
-      setSuccessMessage(`Đăng ký thành công! Vui lòng đăng nhập với email: ${email}`);
+      // Check if user was redirected from registration
+      const registered = urlParams.get("registered");
+      const email = urlParams.get("email");
+      
+      if (registered === "true") {
+        setSuccessMessage(`Đăng ký thành công! Vui lòng đăng nhập với email: ${email}`);
+      }
     }
-  }, [searchParams]);
+  }, []); // Thay đổi dependency từ [searchParams] thành []
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
