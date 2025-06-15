@@ -18,7 +18,7 @@ Main feature:
 
 
 First, This is our homepage, which will display at very first stage:  
-![Screenshoot][/public/images/report/home_page.png]
+![Screenshoot](/public/images/report/home_page.png)
 
 Then let see around, this is when you click to choose what kind of meat you make today![][image2]
 
