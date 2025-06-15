@@ -20,28 +20,30 @@ Main feature:
 First, This is our homepage, which will display at very first stage:  
 ![Screenshoot](/public/images/report/home_page.png)
 
-Then let see around, this is when you click to choose what kind of meat you make today![][image2]
+Then let see around, this is when you click to choose what kind of meat you make today![Screenshoot2](/public/images/report/pic.png)
 
-Our search function![][image3]  
-Let scroll down and you will see:![][image4]  
-![][image5]  
+Our search function![search_tool](/public/images/report/search_function.png) 
+Let scroll down and you will see:![Homepage_2](/public/images/report/pic1.png)  
+![Homepage_3](/public/images/report/pic2.png) 
 Under Popular Categories is where you can sign up.  
-![][image6]  
+![Homepage_4](/public/images/report/pic3.png) 
 This is where you can see what you cooked last time.
-
+![Homepage_5](/public/images/report/pic4.png) 
 Let's see our Recipe page:  
-![][image7]![][image8]
-
+![Recipe_1](/public/images/report/recipe1.png) 
+![Recipe_2](/public/images/report/recipe2.png) 
+![Recipe_3](/public/images/report/recipe3.png) 
 Follow up is where you can see what relates to that food when you scroll down.  
-![][image9]
+![Recipe_3](/public/images/report/recipe3.png) 
 
 Let's see what else do we have:  
 Our profile page, where you can see and change your information.  
-![][image10]  
+![Profile](/public/images/report/profile.png) 
 Our favourite page, where you can save meal you like.  
-![][image11]  
+![Favourite](/public/images/report/fav.png) 
 Last but not least, Sign in and sign up page.  
-![][image12]![][image13]  
+![Sign-in](/public/images/report/sign-in.png) 
+![Sign-up](/public/images/report/sign-up.png) 
 The background is not a simple picture, it's a 4k Video.
 
 
