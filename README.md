@@ -1,20 +1,23 @@
-##Members: 
-1. Trương Hoàng Minh Hiển \- 23020014\.  
-2. Nguyễn Đôn Trí \- 23020002  
-3. Phạm Huy Hoàng \- 23020017  
-4. Đặng Hoàng Việt \- 20020018  
-5. Mai Phước Long \- 23020005\.
+# Project Report
 
-##Project Objectives:  
+## Project Objectives:  
 	This project is designed for everyone who loves cooking. Here, we can find and create   
 	delicious food. Let's have an overview of our website Only-Food.  
-##Main feature:
+## Main feature:
 
 * Use the search function and choose, what relates to your ingredients will show up.  
 * Click to see how that food is made.  
 * Save your last search below, so that you can search again.  
 * Show another advice meal that relates to the food you choose.
 
+## Members: 
+1. Trương Hoàng Minh Hiển \- 23020014\.  
+2. Nguyễn Đôn Trí \- 23020002  
+3. Phạm Huy Hoàng \- 23020017  
+4. Đặng Hoàng Việt \- 20020018  
+5. Mai Phước Long \- 23020005\.
+
+## Our web
 
 First, This is our homepage, which will display at very first stage:  
 ![Screenshoot](/public/images/report/home_page.png)
